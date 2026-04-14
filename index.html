@@ -645,6 +645,7 @@ Happy birthday sara, I love you like a sister <3`;
 
     function toggleMog() {
       const cloud = document.getElementById('mogCloud');
+      const nicheCloud = document.getElementById('nicheCloud');
       const isOpen = cloud.style.display === 'block' && cloud.classList.contains('show');
 
       if (isOpen) {
@@ -655,13 +656,20 @@ Happy birthday sara, I love you like a sister <3`;
         return;
       }
 
-      closeAllPopups('mog');
+      nicheCloud.classList.remove('show');
+      setTimeout(() => {
+        if (!nicheCloud.classList.contains('show')) {
+          nicheCloud.style.display = 'none';
+        }
+      }, 250);
+
       cloud.style.display = 'block';
       requestAnimationFrame(() => cloud.classList.add('show'));
     }
 
     function toggleNiche() {
       const cloud = document.getElementById('nicheCloud');
+      const mogCloud = document.getElementById('mogCloud');
       const isOpen = cloud.style.display === 'block' && cloud.classList.contains('show');
 
       if (isOpen) {
@@ -672,7 +680,13 @@ Happy birthday sara, I love you like a sister <3`;
         return;
       }
 
-      closeAllPopups('niche');
+      mogCloud.classList.remove('show');
+      setTimeout(() => {
+        if (!mogCloud.classList.contains('show')) {
+          mogCloud.style.display = 'none';
+        }
+      }, 250);
+
       cloud.style.display = 'block';
       requestAnimationFrame(() => cloud.classList.add('show'));
     }
