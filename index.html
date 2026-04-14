@@ -71,7 +71,7 @@
         0 18px 40px rgba(231, 115, 164, 0.18),
         inset 0 1px 0 rgba(255,255,255,0.9);
       border: 1.5px solid rgba(255, 188, 216, 0.65);
-      overflow: hidden;
+      overflow: visible;
     }
 
     .hero::before,
@@ -244,6 +244,86 @@
       letter-spacing: 6px;
     }
 
+    .mog-wrap {
+      position: absolute;
+      right: -36px;
+      top: 110px;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mog-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff8fba, #e0528a);
+      color: white;
+      font-family: 'Quicksand', Arial, Helvetica, sans-serif;
+      font-weight: 700;
+      font-size: 0.98rem;
+      cursor: pointer;
+      box-shadow: 0 12px 26px rgba(224, 82, 138, 0.28);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .mog-btn:hover {
+      transform: translateY(-2px) rotate(-2deg);
+      box-shadow: 0 16px 30px rgba(224, 82, 138, 0.34);
+    }
+
+    .mog-cloud {
+      display: none;
+      position: relative;
+      width: 220px;
+      padding: 14px;
+      background: linear-gradient(180deg, #fff, #fff7fb);
+      border-radius: 28px;
+      box-shadow: 0 14px 30px rgba(219, 122, 168, 0.24);
+      border: 2px solid #ffd1e3;
+    }
+
+    .mog-cloud::before,
+    .mog-cloud::after {
+      content: "";
+      position: absolute;
+      background: linear-gradient(180deg, #fff, #fff7fb);
+      border: 2px solid #ffd1e3;
+      border-radius: 50%;
+    }
+
+    .mog-cloud::before {
+      width: 42px;
+      height: 42px;
+      left: 16px;
+      bottom: -16px;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      transform: rotate(-20deg);
+    }
+
+    .mog-cloud::after {
+      width: 28px;
+      height: 28px;
+      left: 46px;
+      bottom: -26px;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      transform: rotate(-10deg);
+    }
+
+    .mog-cloud img {
+      width: 100%;
+      display: block;
+      border-radius: 18px;
+      border: 2px solid #ffb8d3;
+    }
+
     .footer {
       text-align: center;
       padding-top: 20px;
@@ -266,6 +346,11 @@
       .subtitle {
         font-size: 1rem;
       }
+
+      .mog-wrap {
+        position: static;
+        margin-top: 16px;
+      }
     }
   </style>
 </head>
@@ -277,6 +362,13 @@
       <div class="sparkle one">✦</div>
       <div class="sparkle two">✧</div>
       <div class="sparkle three">⋆</div>
+
+      <div class="mog-wrap">
+        <button class="mog-btn" onclick="toggleMog()">mog 🤫</button>
+        <div class="mog-cloud" id="mogCloud">
+          <img src="Screenshot 2026-04-14 204807.png" alt="Mog surprise" />
+        </div>
+      </div>
 
       <div class="hero-content">
         <div class="eyebrow">💖 A little surprise for you</div>
@@ -363,7 +455,11 @@ Happy birthday sara, I love you like a sister <3
       const box = document.getElementById('parrotBox');
       box.style.display = box.style.display === 'block' ? 'none' : 'block';
     }
+
+    function toggleMog() {
+      const cloud = document.getElementById('mogCloud');
+      cloud.style.display = cloud.style.display === 'block' ? 'none' : 'block';
+    }
   </script>
 </body>
 </html>
-
