@@ -219,6 +219,14 @@
       max-width: 700px;
       margin-left: auto;
       margin-right: auto;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .message-box.show {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .parrot-box {
@@ -228,6 +236,14 @@
       flex-direction: column;
       align-items: center;
       gap: 6px;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .parrot-box.show {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .parrot-box img {
@@ -298,6 +314,17 @@
       box-shadow: 0 16px 30px rgba(224, 82, 138, 0.34);
     }
 
+    .mog-btn.bounce {
+      animation: balloonButtonBounce 0.35s ease;
+    }
+
+    @keyframes balloonButtonBounce {
+      0% { transform: scale(1); }
+      35% { transform: scale(0.92); }
+      65% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
     .mog-cloud {
       display: none;
       position: relative;
@@ -308,6 +335,15 @@
       box-shadow: 0 14px 30px rgba(219, 122, 168, 0.24);
       border: 2px solid #ffd1e3;
       z-index: 9999;
+      opacity: 0;
+      transform: scale(0.88);
+      transform-origin: top center;
+      transition: opacity 0.28s ease, transform 0.28s ease;
+    }
+
+    .mog-cloud.show {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .mog-cloud::before,
@@ -453,8 +489,27 @@
           <div class="parrot-decor">🦜 💓 🦜 💞 🦜</div>
         </div>
 
-        <div class="message-box" id="messageBox">
-Hey sara.. I really tried my best for this so please don't flame me like usual, this is the least I could do for what you've done for me.
+        <div class="message-box" id="messageBox"></div>
+      </div>
+    </section>
+
+    <p class="footer">For Sara Khanum's birthday 🎀</p>
+  </div>
+
+  <script>
+    const bubbleContainer = document.getElementById('bubbles');
+    const images = [
+      'dean1.jpg',
+      'dean2.jpg',
+      'dean3.jpg',
+      'dean winchester supernatural season 1.jpg',
+      'sam1.jpg',
+      'sam2.jpg',
+      'sam3.jpg',
+      'Sam Winchester.jpg'
+    ];
+
+    const fullMessage = `Hey sara.. I really tried my best for this so please don't flame me like usual, this is the least I could do for what you've done for me.
 
 I know the year has barely started but you've already made my whole year, just by you always making feel included even in your family.. Feels more like my real family especially when shahd starts singing in our ears, maybe tata likes me too but I am not sure about that part.
 
@@ -464,27 +519,7 @@ I always look foward for us hanging out.. and forcing you to download that fucka
 
 I am hoping you really have the best day possible because you are always out there for me to make sure I feel normal during this war, you deserve nothing but the best. Inshallah you will spend a good time with your family and celebrate it well...and again let shahd sing ig for you,,
 
-Happy birthday sara, I love you like a sister &lt;3
-        </div>
-      </div>
-    </section>
-
-    <p class="footer">For Sara Khanum's birthday 🎀</p>
-  </div>
-
-  <script>
-    const bubbleContainer = document.getElementById('bubbles');
-
-    const images = [
-      "dean1.jpg",
-      "dean2.jpg",
-      "dean3.jpg",
-      "dean winchester supernatural season 1.jpg",
-      "sam1.jpg",
-      "sam2.jpg",
-      "sam3.jpg",
-      "Sam Winchester.jpg"
-    ];
+Happy birthday sara, I love you like a sister <3`;
 
     for (let i = 0; i < 20; i++) {
       const bubble = document.createElement('div');
@@ -492,7 +527,6 @@ Happy birthday sara, I love you like a sister &lt;3
 
       const img = document.createElement('img');
       img.src = images[Math.floor(Math.random() * images.length)];
-
       bubble.appendChild(img);
 
       bubble.style.left = Math.random() * 100 + 'vw';
@@ -503,54 +537,160 @@ Happy birthday sara, I love you like a sister &lt;3
       bubbleContainer.appendChild(bubble);
     }
 
+    function closeAllPopups(except = '') {
+      const messageBox = document.getElementById('messageBox');
+      const parrotBox = document.getElementById('parrotBox');
+      const mogCloud = document.getElementById('mogCloud');
+      const nicheCloud = document.getElementById('nicheCloud');
+
+      if (except !== 'message') {
+        messageBox.classList.remove('show');
+        setTimeout(() => {
+          if (!messageBox.classList.contains('show')) {
+            messageBox.style.display = 'none';
+            messageBox.textContent = '';
+          }
+        }, 300);
+      }
+
+      if (except !== 'parrot') {
+        parrotBox.classList.remove('show');
+        setTimeout(() => {
+          if (!parrotBox.classList.contains('show')) {
+            parrotBox.style.display = 'none';
+          }
+        }, 300);
+      }
+
+      if (except !== 'mog') {
+        mogCloud.classList.remove('show');
+        setTimeout(() => {
+          if (!mogCloud.classList.contains('show')) {
+            mogCloud.style.display = 'none';
+          }
+        }, 250);
+      }
+
+      if (except !== 'niche') {
+        nicheCloud.classList.remove('show');
+        setTimeout(() => {
+          if (!nicheCloud.classList.contains('show')) {
+            nicheCloud.style.display = 'none';
+          }
+        }, 250);
+      }
+    }
+
+    function typeMessage(text, element, speed = 14) {
+      element.textContent = '';
+      let i = 0;
+      const typer = setInterval(() => {
+        element.textContent += text.charAt(i);
+        i++;
+        if (i >= text.length) clearInterval(typer);
+      }, speed);
+      element.dataset.typing = 'true';
+      setTimeout(() => {
+        element.dataset.typing = 'false';
+      }, text.length * speed + 50);
+    }
+
     function toggleMessage() {
       const box = document.getElementById('messageBox');
-      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+      const isOpen = box.style.display === 'block' && box.classList.contains('show');
+
+      if (isOpen) {
+        box.classList.remove('show');
+        setTimeout(() => {
+          box.style.display = 'none';
+          box.textContent = '';
+        }, 300);
+        return;
+      }
+
+      closeAllPopups('message');
+      box.style.display = 'block';
+      requestAnimationFrame(() => box.classList.add('show'));
+      typeMessage(fullMessage, box, 10);
     }
 
     function toggleParrot() {
       const box = document.getElementById('parrotBox');
-      box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+      const isOpen = box.style.display === 'flex' && box.classList.contains('show');
+
+      if (isOpen) {
+        box.classList.remove('show');
+        setTimeout(() => {
+          box.style.display = 'none';
+        }, 300);
+        return;
+      }
+
+      closeAllPopups('parrot');
+      box.style.display = 'flex';
+      requestAnimationFrame(() => box.classList.add('show'));
     }
 
     function toggleMog() {
       const cloud = document.getElementById('mogCloud');
-      cloud.style.display = cloud.style.display === 'block' ? 'none' : 'block';
+      const isOpen = cloud.style.display === 'block' && cloud.classList.contains('show');
+
+      if (isOpen) {
+        cloud.classList.remove('show');
+        setTimeout(() => {
+          cloud.style.display = 'none';
+        }, 250);
+        return;
+      }
+
+      closeAllPopups('mog');
+      cloud.style.display = 'block';
+      requestAnimationFrame(() => cloud.classList.add('show'));
     }
 
     function toggleNiche() {
       const cloud = document.getElementById('nicheCloud');
-      cloud.style.display = cloud.style.display === 'block' ? 'none' : 'block';
+      const isOpen = cloud.style.display === 'block' && cloud.classList.contains('show');
+
+      if (isOpen) {
+        cloud.classList.remove('show');
+        setTimeout(() => {
+          cloud.style.display = 'none';
+        }, 250);
+        return;
+      }
+
+      closeAllPopups('niche');
+      cloud.style.display = 'block';
+      requestAnimationFrame(() => cloud.classList.add('show'));
     }
 
     function releaseBalloonsFromButton() {
       const button = document.getElementById('balloonBtn');
+      button.classList.remove('bounce');
+      void button.offsetWidth;
+      button.classList.add('bounce');
+
       const rect = button.getBoundingClientRect();
       const startX = rect.left + rect.width / 2;
       const startY = rect.top + rect.height / 2;
+      const emojis = ['🎈', '🎈', '💖', '💕', '🎀', '💗'];
 
-      const emojis = ["🎈", "🎈", "💖", "💕", "🎀", "💗"];
-
-      for (let i = 0; i < 18; i++) {
+      for (let i = 0; i < 24; i++) {
         const item = document.createElement('div');
         item.className = 'burst-emoji';
         item.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-
         item.style.left = startX + 'px';
         item.style.top = startY + 'px';
         item.style.fontSize = (22 + Math.random() * 18) + 'px';
 
-        const x = (Math.random() * 160 - 80) + 'px';
-        const y = -(140 + Math.random() * 220) + 'px';
-
+        const x = (Math.random() * 180 - 90) + 'px';
+        const y = -(160 + Math.random() * 240) + 'px';
         item.style.setProperty('--x', x);
         item.style.setProperty('--y', y);
 
         document.body.appendChild(item);
-
-        setTimeout(() => {
-          item.remove();
-        }, 2400);
+        setTimeout(() => item.remove(), 2400);
       }
     }
   </script>
