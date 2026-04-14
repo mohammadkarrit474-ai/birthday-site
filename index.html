@@ -255,6 +255,27 @@
       gap: 10px;
     }
 
+    .niche-wrap {
+      position: absolute;
+      left: -50px;
+      top: 300px;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .balloon-wrap {
+      position: absolute;
+      right: -44px;
+      bottom: 60px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .mog-btn {
       display: inline-flex;
       align-items: center;
@@ -280,7 +301,7 @@
     .mog-cloud {
       display: none;
       position: relative;
-      width: 340px; /* bigger cloud */
+      width: 340px;
       padding: 18px;
       background: linear-gradient(180deg, #fff, #fff7fb);
       border-radius: 28px;
@@ -324,15 +345,26 @@
       border: 2px solid #ffb8d3;
     }
 
-    .niche-wrap {
-      position: absolute;
-      left: -50px;
-      top: 300px; /* pushed lower */
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
+    .burst-emoji {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      animation: burstFloat 2.4s ease-out forwards;
+      filter: drop-shadow(0 6px 10px rgba(224, 82, 138, 0.22));
+    }
+
+    @keyframes burstFloat {
+      0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.7);
+      }
+      15% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--x), var(--y)) scale(1.2);
+      }
     }
 
     .footer {
@@ -358,7 +390,9 @@
         font-size: 1rem;
       }
 
-      .mog-wrap {
+      .mog-wrap,
+      .niche-wrap,
+      .balloon-wrap {
         position: static;
         margin-top: 16px;
       }
@@ -386,6 +420,10 @@
         <div class="mog-cloud" id="nicheCloud">
           <img src="Screenshot 2026-04-14 205727.png" alt="Niche moment" />
         </div>
+      </div>
+
+      <div class="balloon-wrap">
+        <button class="mog-btn" id="balloonBtn" onclick="releaseBalloonsFromButton()">don't click 🎈</button>
       </div>
 
       <div class="hero-content">
@@ -425,7 +463,7 @@ I always look foward for us hanging out.. and forcing you to download that fucka
 
 I am hoping you really have the best day possible because you are always out there for me to make sure I feel normal during this war, you deserve nothing but the best. Inshallah you will spend a good time with your family and celebrate it well...and again let shahd sing ig for you,,
 
-Happy birthday sara, I love you like a sister <3
+Happy birthday sara, I love you like a sister &lt;3
         </div>
       </div>
     </section>
@@ -471,7 +509,7 @@ Happy birthday sara, I love you like a sister <3
 
     function toggleParrot() {
       const box = document.getElementById('parrotBox');
-      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+      box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
     }
 
     function toggleMog() {
@@ -482,6 +520,37 @@ Happy birthday sara, I love you like a sister <3
     function toggleNiche() {
       const cloud = document.getElementById('nicheCloud');
       cloud.style.display = cloud.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function releaseBalloonsFromButton() {
+      const button = document.getElementById('balloonBtn');
+      const rect = button.getBoundingClientRect();
+      const startX = rect.left + rect.width / 2;
+      const startY = rect.top + rect.height / 2;
+
+      const emojis = ["🎈", "🎈", "💖", "💕", "🎀", "💗"];
+
+      for (let i = 0; i < 18; i++) {
+        const item = document.createElement('div');
+        item.className = 'burst-emoji';
+        item.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+        item.style.left = startX + 'px';
+        item.style.top = startY + 'px';
+        item.style.fontSize = (22 + Math.random() * 18) + 'px';
+
+        const x = (Math.random() * 160 - 80) + 'px';
+        const y = -(140 + Math.random() * 220) + 'px';
+
+        item.style.setProperty('--x', x);
+        item.style.setProperty('--y', y);
+
+        document.body.appendChild(item);
+
+        setTimeout(() => {
+          item.remove();
+        }, 2400);
+      }
     }
   </script>
 </body>
