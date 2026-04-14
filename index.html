@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday!</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Pacifico&display=swap');
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Quicksand', Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 210, 230, 0.75), transparent 28%),
+        radial-gradient(circle at top right, rgba(255, 190, 220, 0.55), transparent 24%),
+        linear-gradient(180deg, #fff1f7 0%, #ffe4ef 100%);
+      color: #6b2d4a;
+      overflow-x: hidden;
+    }
+
+    .bubbles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -120px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      animation: floatUp linear infinite;
+      opacity: 0.8;
+      box-shadow: 0 10px 25px rgba(255, 105, 160, 0.25);
+      border: 3px solid rgba(255,255,255,0.75);
+    }
+
+    .bubble img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0) scale(1); opacity: 0.8; }
+      to { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: min(980px, 92%);
+      margin: 0 auto;
+      padding: 40px 0 60px;
+    }
+
+    .hero {
+      position: relative;
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,248,252,0.92));
+      backdrop-filter: blur(14px);
+      border-radius: 34px;
+      padding: 62px 28px 56px;
+      text-align: center;
+      box-shadow:
+        0 18px 40px rgba(231, 115, 164, 0.18),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+      border: 1.5px solid rgba(255, 188, 216, 0.65);
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 187, 216, 0.42), rgba(255,255,255,0));
+      z-index: 0;
+    }
+
+    .hero::before {
+      top: -65px;
+      left: -45px;
+    }
+
+    .hero::after {
+      bottom: -75px;
+      right: -35px;
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 24px;
+      opacity: 0.7;
+      z-index: 0;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    .sparkle.one { top: 18px; right: 110px; }
+    .sparkle.two { bottom: 30px; left: 90px; animation-delay: 1s; }
+    .sparkle.three { top: 90px; left: 60px; animation-delay: 1.7s; }
+
+    @keyframes twinkle {
+      0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.5; }
+      50% { transform: scale(1.18) rotate(10deg); opacity: 1; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      background: rgba(255, 228, 239, 0.9);
+      color: #c85788;
+      font-size: 0.98rem;
+      font-weight: 700;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(2.5rem, 6vw, 4.9rem);
+      line-height: 1.15;
+      color: #e0528a;
+      text-shadow: 0 2px 0 rgba(255,255,255,0.7);
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .cake-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 86px;
+      height: 86px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #fff7fb, #ffdbe9);
+      box-shadow:
+        0 10px 20px rgba(224, 82, 138, 0.16),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+      border: 1px solid rgba(255, 198, 220, 0.8);
+      font-size: 2.7rem;
+      transform: rotate(-4deg);
+    }
+
+    .subtitle {
+      max-width: 650px;
+      margin: 0 auto 26px;
+      font-size: 1.08rem;
+      line-height: 1.75;
+      color: #7a4560;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: center;
+    }
+
+    .button-row .btn {
+      width: 240px;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ee6ba1, #df4f89);
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 22px rgba(224, 82, 138, 0.28);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 14px 28px rgba(224, 82, 138, 0.34);
+    }
+
+    .message-box {
+      display: none;
+      margin-top: 24px;
+      padding: 22px 20px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #fff7fb, #ffeaf3);
+      border: 2px dashed #ff9ec5;
+      line-height: 1.9;
+      white-space: pre-line;
+      box-shadow: 0 0 0 6px rgba(255, 182, 210, 0.25), inset 0 1px 0 rgba(255,255,255,0.9);
+      text-align: left;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .parrot-box {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .parrot-box img {
+      max-width: 250px;
+      width: 100%;
+      border-radius: 20px;
+      border: 3px solid #ff9ec5;
+      box-shadow: 0 10px 25px rgba(255, 120, 170, 0.3);
+      margin: 10px 0;
+    }
+
+    .parrot-decor {
+      font-size: 22px;
+      letter-spacing: 6px;
+    }
+
+    .footer {
+      text-align: center;
+      padding-top: 20px;
+      color: #8b5a70;
+      font-weight: 600;
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding: 42px 18px 40px;
+        border-radius: 28px;
+      }
+
+      .cake-badge {
+        width: 72px;
+        height: 72px;
+        font-size: 2.2rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bubbles" id="bubbles"></div>
+
+  <div class="container">
+    <section class="hero">
+      <div class="sparkle one">✦</div>
+      <div class="sparkle two">✧</div>
+      <div class="sparkle three">⋆</div>
+
+      <div class="hero-content">
+        <div class="eyebrow">💖 A little surprise for you</div>
+
+        <div class="title-row">
+          <h1>Happy Birthday, Sara</h1>
+          <div class="cake-badge">🎂</div>
+        </div>
+
+        <p class="subtitle">
+          Hoping this will make your blessed day even better
+        </p>
+
+        <div class="button-row">
+          <button class="btn" onclick="toggleMessage()">Open Message 💌</button>
+        </div>
+
+        <div class="button-row" style="margin-top:10px;">
+          <button class="btn" onclick="toggleParrot()">Surprise Here 🦜</button>
+        </div>
+
+        <div class="parrot-box" id="parrotBox">
+          <div class="parrot-decor">💖 🦜 💕 🦜 💗</div>
+          <img src="parrot.png" alt="Parrot" />
+          <div class="parrot-decor">🦜 💓 🦜 💞 🦜</div>
+        </div>
+
+        <div class="message-box" id="messageBox">
+Hey sara.. I really tried my best for this so please don't flame me like usual, this is the least I could do for what you've done for me.
+
+I know the year has barely started but you've already made my whole year, just by you always making feel included even in your family.. Feels more like my real family especially when shahd starts singing in our ears, maybe tata likes me too but I am not sure about that part.
+
+You are like my little sister and I like having you around, despite you having your doubts I will always reassure you about anything and I will make sure that I have your back. I know you think what you've done is nothing, but in my eyes you are always checking up on me and trying your best to help and that means the world to me.
+
+I always look foward for us hanging out.. and forcing you to download that fuckass vpn everyday so we could play roblox.. call it cringy or whatever (YOUR WORDS NOT MINE) but yes I like spending time together a lot.. although your woke version didn't like me this much.
+
+I am hoping you really have the best day possible because you are always out there for me to make sure I feel normal during this war, you deserve nothing but the best. Inshallah you will spend a good time with your family and celebrate it well...and again let shahd sing ig for you,,
+
+Happy birthday sara, I love you like a sister <3
+        </div>
+      </div>
+    </section>
+
+    <p class="footer">For Sara Khanum's birthday 🎀</p>
+  </div>
+
+  <script>
+    const bubbleContainer = document.getElementById('bubbles');
+
+    const images = [
+      "dean1.jpg",
+      "dean2.jpg",
+      "dean3.jpg",
+      "dean winchester supernatural season 1.jpg",
+      "sam1.jpg",
+      "sam2.jpg",
+      "sam3.jpg",
+      "Sam Winchester.jpg"
+    ];
+
+    for (let i = 0; i < 20; i++) {
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+
+      const img = document.createElement('img');
+      img.src = images[Math.floor(Math.random() * images.length)];
+
+      bubble.appendChild(img);
+
+      bubble.style.left = Math.random() * 100 + 'vw';
+      bubble.style.animationDuration = (8 + Math.random() * 10) + 's';
+      bubble.style.animationDelay = (Math.random() * 5) + 's';
+      bubble.style.width = bubble.style.height = (60 + Math.random() * 40) + 'px';
+
+      bubbleContainer.appendChild(bubble);
+    }
+
+    function toggleMessage() {
+      const box = document.getElementById('messageBox');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function toggleParrot() {
+      const box = document.getElementById('parrotBox');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
