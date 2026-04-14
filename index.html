@@ -628,6 +628,8 @@ Happy birthday sara, I love you like a sister <3`;
 
     function toggleParrot() {
       const box = document.getElementById('parrotBox');
+      const mogCloud = document.getElementById('mogCloud');
+      const nicheCloud = document.getElementById('nicheCloud');
       const isOpen = box.style.display === 'flex' && box.classList.contains('show');
 
       if (isOpen) {
@@ -638,7 +640,15 @@ Happy birthday sara, I love you like a sister <3`;
         return;
       }
 
-      closeAllPopups('parrot');
+      // only close mog/niche, NOT message
+      mogCloud.classList.remove('show');
+      nicheCloud.classList.remove('show');
+
+      setTimeout(() => {
+        if (!mogCloud.classList.contains('show')) mogCloud.style.display = 'none';
+        if (!nicheCloud.classList.contains('show')) nicheCloud.style.display = 'none';
+      }, 250);
+
       box.style.display = 'flex';
       requestAnimationFrame(() => box.classList.add('show'));
     }
