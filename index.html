@@ -521,6 +521,8 @@ I am hoping you really have the best day possible because you are always out the
 
 Happy birthday sara, I love you like a sister <3`;
 
+    let typingInterval = null;
+
     for (let i = 0; i < 20; i++) {
       const bubble = document.createElement('div');
       bubble.className = 'bubble';
@@ -537,6 +539,13 @@ Happy birthday sara, I love you like a sister <3`;
       bubbleContainer.appendChild(bubble);
     }
 
+    function stopTyping() {
+      if (typingInterval) {
+        clearInterval(typingInterval);
+        typingInterval = null;
+      }
+    }
+
     function closeAllPopups(except = '') {
       const messageBox = document.getElementById('messageBox');
       const parrotBox = document.getElementById('parrotBox');
@@ -544,6 +553,7 @@ Happy birthday sara, I love you like a sister <3`;
       const nicheCloud = document.getElementById('nicheCloud');
 
       if (except !== 'message') {
+        stopTyping();
         messageBox.classList.remove('show');
         setTimeout(() => {
           if (!messageBox.classList.contains('show')) {
@@ -581,25 +591,19 @@ Happy birthday sara, I love you like a sister <3`;
       }
     }
 
-    let typingInterval;
-
     function typeMessage(text, element, speed = 30) {
-      clearInterval(typingInterval); // stop previous typing
+      stopTyping();
       element.textContent = '';
       let i = 0;
 
       typingInterval = setInterval(() => {
         element.textContent += text.charAt(i);
         i++;
+
         if (i >= text.length) {
-          clearInterval(typingInterval);
+          stopTyping();
         }
       }, speed);
-    }, speed);
-      element.dataset.typing = 'true';
-      setTimeout(() => {
-        element.dataset.typing = 'false';
-      }, text.length * speed + 50);
     }
 
     function toggleMessage() {
@@ -607,6 +611,7 @@ Happy birthday sara, I love you like a sister <3`;
       const isOpen = box.style.display === 'block' && box.classList.contains('show');
 
       if (isOpen) {
+        stopTyping();
         box.classList.remove('show');
         setTimeout(() => {
           box.style.display = 'none';
