@@ -581,14 +581,21 @@ Happy birthday sara, I love you like a sister <3`;
       }
     }
 
-    function typeMessage(text, element, speed = 14) {
+    let typingInterval;
+
+    function typeMessage(text, element, speed = 30) {
+      clearInterval(typingInterval); // stop previous typing
       element.textContent = '';
       let i = 0;
-      const typer = setInterval(() => {
+
+      typingInterval = setInterval(() => {
         element.textContent += text.charAt(i);
         i++;
-        if (i >= text.length) clearInterval(typer);
+        if (i >= text.length) {
+          clearInterval(typingInterval);
+        }
       }, speed);
+    }, speed);
       element.dataset.typing = 'true';
       setTimeout(() => {
         element.dataset.typing = 'false';
